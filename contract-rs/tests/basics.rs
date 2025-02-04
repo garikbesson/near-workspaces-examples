@@ -1,4 +1,4 @@
-use near_sdk::{AccountId, Gas, NearToken};
+use near_sdk::{borsh, AccountId, Gas, NearToken};
 use near_workspaces::{
     types::{KeyType, SecretKey},
     Account, BlockHeight,
@@ -224,8 +224,8 @@ async fn patch_state() -> Result<(), Box<dyn std::error::Error>> {
     let _ = sandbox
         .patch_state(
             contract.id(),
-            "greeting".as_bytes(),
-            new_greeting.as_bytes(),
+            "STATE".as_bytes(),
+            &borsh::to_vec(new_greeting)?,
         )
         .await?;
 
