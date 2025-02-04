@@ -219,20 +219,13 @@ async fn patch_state() -> Result<(), Box<dyn std::error::Error>> {
     let wasm_file = near_workspaces::compile_project("./").await?;
     let contract = sandbox.dev_deploy(&wasm_file).await?;
 
-    let default_greeting = "Hello";
-
-    let _ = contract
-        .call("set_greeting")
-        .args_json(json!({"greeting": "Howdy"}))
-        .gas(Gas::from_tgas(100))
-        .transact()
-        .await?;
+    let new_greeting = "Howdy";
 
     let _ = sandbox
         .patch_state(
             contract.id(),
             "greeting".as_bytes(),
-            default_greeting.as_bytes(),
+            new_greeting.as_bytes(),
         )
         .await?;
 
@@ -243,8 +236,9 @@ async fn patch_state() -> Result<(), Box<dyn std::error::Error>> {
         .json::<String>()?;
 
     println!("current_greeting: {:#?}", current_greeting);
+    // current_greeting: "Howdy"
 
-    assert_eq!(current_greeting, default_greeting);
+    assert_eq!(current_greeting, new_greeting);
 
     Ok(())
 }
