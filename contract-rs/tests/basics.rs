@@ -40,6 +40,7 @@ async fn create_subaccount() -> Result<(), Box<dyn std::error::Error>> {
         .transact()
         .await?
         .into_result()?;
+
     println!("alice_account: {:#?}", alice_account);
     // alice_account: Account { id: AccountId("alice.test.near") }
 
@@ -240,6 +241,7 @@ async fn patch_state() -> Result<(), Box<dyn std::error::Error>> {
         .view()
         .await?
         .json::<String>()?;
+
     println!("current_greeting: {:#?}", current_greeting);
 
     assert_eq!(current_greeting, default_greeting);
@@ -255,9 +257,11 @@ async fn time_travel() -> Result<(), Box<dyn std::error::Error>> {
 
     let (timestamp, epoch_height): (u64, u64) =
         contract.call("current_env_data").view().await?.json()?;
+
     println!("timestamp = {}, epoch_height = {}", timestamp, epoch_height);
 
     let block_info = sandbox.view_block().await?;
+
     println!("BlockInfo pre-fast_forward {:#?}", block_info);
 
     // Call into fast_forward. This will take a bit of time to invoke, but is
@@ -266,9 +270,11 @@ async fn time_travel() -> Result<(), Box<dyn std::error::Error>> {
 
     let (timestamp, epoch_height): (u64, u64) =
         contract.call("current_env_data").view().await?.json()?;
+
     println!("timestamp = {}, epoch_height = {}", timestamp, epoch_height);
 
     let block_info = sandbox.view_block().await?;
+
     println!("BlockInfo post-fast_forward {:#?}", block_info);
 
     Ok(())
@@ -316,6 +322,7 @@ async fn use_testnet() -> Result<(), Box<dyn std::error::Error>> {
         .await?
         .json::<String>()
         .unwrap();
+
     println!(
         "updated_greeting_on_testnet: {:#?}",
         updated_greeting_on_testnet
