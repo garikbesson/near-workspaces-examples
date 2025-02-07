@@ -352,7 +352,7 @@ async fn spoon_contract() -> Result<(), Box<dyn std::error::Error>> {
     println!("greeting: {:#?}", greeting);
     // greeting: "Hello"
 
-    // This is because "Hello" is a defailt greeting for Hello Near contract. When you spoon contract from archival node, you spoon only the contract, not the state.
+    // This is because "Hello" is a default greeting for Hello Near contract. When you spoon contract from archival node, you spoon only the contract, not the state.
     // That means if contract have to be initialized - you need to do that again calling initiliaze method
     assert_eq!(greeting, "Hello");
 

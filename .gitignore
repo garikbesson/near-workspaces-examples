@@ -13,3 +13,6 @@
 **/dist
 **/.next
 **/.parcel-cache
+
+# Test credentials
+contract-ts/.near-credentials/workspaces/testnet/*.test-ac-*
