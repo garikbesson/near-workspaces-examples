@@ -232,7 +232,7 @@ test('time travel', async (t) => {
   const [initialTimestamp, initialEpochHeight] = await simpleContract.view('current_env_data', {});
   console.log(`initialTimestamp = ${initialTimestamp}, initialEpochHeight = ${initialEpochHeight}`);
 
-  const initialBlockInfo = await worker.provider.block({ finality: 'optimistic' });
+  const initialBlockInfo = await worker.provider.block({ finality: 'final' });
   console.log('initialBlockInfo:', initialBlockInfo);
 
   const delta = 10000;
@@ -241,10 +241,11 @@ test('time travel', async (t) => {
   const [finalTimestamp, finalEpochHeight] = await simpleContract.view('current_env_data', {});
   console.log(`finalTimestamp = ${finalTimestamp}, finalEpochHeight = ${finalEpochHeight}`);
 
-  const finalBlockInfo = await worker.provider.block({ finality: 'optimistic' });
+  const finalBlockInfo = await worker.provider.block({ finality: 'final' });
   console.log('finalBlockInfo:', finalBlockInfo);
-  
-  t.assert(finalBlockInfo.header.height > initialBlockInfo.header.height);
+
+  // Rounding off to nearest hundred, providing wiggle room incase not perfectly `forward_height`
+  t.true(Math.ceil(finalBlockInfo.header.height / 100) * 100 === delta);
 });
 
 test('use testnet', async (t) => {
