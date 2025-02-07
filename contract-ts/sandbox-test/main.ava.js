@@ -134,7 +134,7 @@ test('create account from credentials file', async (t) => {
   const { root } = t.context.accounts;
 
   const account_id = "file.test.near";
-  const keyPair = await getKeyFromFile('./.near-credentials/workspaces/testnet/test-ac-1719933221123-3.testnet.json');
+  const keyPair = await getKeyFromFile('.near-credentials/workspaces/testnet/getKeyFromFile.json');
 
   const account = await root.createAccount(account_id, {
     keyPair,
@@ -254,7 +254,7 @@ test('use testnet', async (t) => {
   const currentGreetingOnTestnet = await testnet.rootAccount.call('hello.near-examples.testnet', 'get_greeting', {});
   console.log('currentGreetingOnTestnet:', currentGreetingOnTestnet);
 
-  const newGreeting = `${currentGreetingOnTestnet} updated`;
+  const newGreeting = `howdy`;
 
   await testnet.rootAccount.call('hello.near-examples.testnet', 'set_greeting', { greeting: newGreeting });
   const updatedGreetingOnTestnet = await testnet.rootAccount.call('hello.near-examples.testnet', 'get_greeting', {});
